@@ -4,6 +4,8 @@ import { prop } from '@typegoose/typegoose'
 export type UserModelType = Base
 
 export class UserModel extends TimeStamps {
+  _id: string
+
   @prop({ unique: true })
   email: string
 
