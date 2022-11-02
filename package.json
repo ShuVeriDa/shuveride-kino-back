@@ -1,8 +1,11 @@
 {
-  "name": "back",
+  "name": "online-cinema",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Online cinema application",
+  "author": {
+    "email": "bashtarov@outlook.com",
+    "name": "Bashtarov S-M"
+  },
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
