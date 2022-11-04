@@ -5,6 +5,7 @@ import { TypegooseModule } from 'nestjs-typegoose'
 import { UserModel } from './user.model'
 
 @Module({
+	controllers: [UserController],
 	imports: [
 		TypegooseModule.forFeature([
 			{
@@ -16,7 +17,6 @@ import { UserModel } from './user.model'
 		]),
 	],
 	providers: [UserService],
-	controllers: [UserController],
 	exports: [UserService],
 })
 export class UserModule {}

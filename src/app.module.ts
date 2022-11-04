@@ -3,9 +3,10 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypegooseModule } from 'nestjs-typegoose'
-import { getMongoDbConfid } from './config/mongo.config'
+
 import { AuthModule } from './auth/auth.module'
 import { UserModule } from './user/user.module'
+import { getMongoConfig } from "./config/mongo.config";
 
 @Module({
 	imports: [
@@ -13,10 +14,10 @@ import { UserModule } from './user/user.module'
 		TypegooseModule.forRootAsync({
 			imports: [ConfigModule],
 			inject: [ConfigService],
-			useFactory: getMongoDbConfid,
+			useFactory: getMongoConfig,
 		}),
-		AuthModule,
 		UserModule,
+		AuthModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

@@ -15,17 +15,17 @@ export class AuthController {
 	constructor(private readonly AuthService: AuthService) {}
 
 	@UsePipes(new ValidationPipe())
-	@Post('login')
 	@HttpCode(200)
-	async login(@Body() dto: AuthDto) {
-		return this.AuthService.login(dto)
+	@Post('login')
+	async login(@Body() data: AuthDto) {
+		return this.AuthService.login(data)
 	}
 
 	@UsePipes(new ValidationPipe())
 	@Post('login/access-token')
 	@HttpCode(200)
-	async getNewTokens(@Body() dto: RefreshTokenDto) {
-		return this.AuthService.getNewTokens(dto)
+	async getNewTokens(@Body() data: RefreshTokenDto) {
+		return this.AuthService.getNewTokens(data)
 	}
 
 	@UsePipes(new ValidationPipe())
