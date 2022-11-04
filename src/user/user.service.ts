@@ -8,18 +8,18 @@ import { genSalt, hash } from "bcryptjs";
 @Injectable()
 export class UserService {
 	constructor(
-		@InjectModel(UserModel) private readonly UserModel: ModelType<UserModel>
+		@InjectModel(UserModel) private readonly userModel: ModelType<UserModel>
 	) {}
 
 	async byId(_id: string) {
-		const user = await this.UserModel.findById(_id)
+		const user = await this.userModel.findById(_id)
 		if (!user) throw new NotFoundException('User no found')
 		return user
 	}
 
 	async updateProfile(_id: string, dto: UpdateUserDto) {
 		const user = await this.byId(_id)
-		const isSameUser = await this.UserModel.findOne({email: dto.email})
+		const isSameUser = await this.userModel.findOne({email: dto.email})
 
 		if(isSameUser && String(_id) === String(isSameUser._id))
 			throw new NotFoundException('Email busy')
@@ -39,7 +39,7 @@ export class UserService {
 	}
 
 	async getCount(){
-		return this.UserModel.find().count().exec()
+		return this.userModel.find().count().exec()
 	}
 
 	async getAll(searchTerm?: string) {
@@ -52,12 +52,12 @@ export class UserService {
 				}
 			}
 
-		return this.UserModel.find(options).select('-password -updatedAt -__v').sort({
+		return this.userModel.find(options).select('-password -updatedAt -__v').sort({
 			createdAt: 'desc'
 		})
 	}
 
 	async delete(id: string) {
-		return this.UserModel.findByIdAndDelete(id).exec()
+		return this.userModel.findByIdAndDelete(id).exec()
 	}
 }

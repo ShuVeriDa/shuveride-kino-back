@@ -15,8 +15,7 @@ import { RefreshTokenDto } from './dto/refreshToken.dto'
 @Injectable()
 export class AuthService {
 	constructor(
-		@InjectModel(UserModel)
-		private readonly UserModel: ModelType<UserModel>,
+		@InjectModel(UserModel) private readonly UserModel: ModelType<UserModel>,
 		private readonly jwtService: JwtService
 	) {}
 
@@ -91,7 +90,7 @@ export class AuthService {
 		})
 
 		const accessToken = await this.jwtService.signAsync(data, {
-			expiresIn: '1d', //заканчивается через 1 час
+			expiresIn: '1h', //заканчивается через 1 час
 		})
 
 		return { refreshToken, accessToken }
