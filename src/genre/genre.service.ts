@@ -13,7 +13,10 @@ export class GenreService {
   }
 
   async bySlug(slug: string) {
-    return this.genreModel.findOne({ slug }).exec();
+    const genre = await  this.genreModel.findOne({ slug }).exec();
+    if (!genre) throw new NotFoundException('Genre not found')
+
+    return genre
   }
 
   async getAll(searchTerm?: string) {
