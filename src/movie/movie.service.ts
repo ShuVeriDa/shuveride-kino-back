@@ -9,6 +9,7 @@ import { Types } from "mongoose";
 export class MovieService {
   constructor(@InjectModel(MovieModel) private readonly movieModel: ModelType<MovieModel>) {
   }
+
   async getAll(searchTerm?: string) {
     let options = {};
 
@@ -70,6 +71,13 @@ export class MovieService {
     if (!updateMovie) throw new NotFoundException("Movie not found");
 
     return updateMovie;
+  }
+
+  async updateRating(id: Types.ObjectId, newRating: number) {
+    return this.movieModel.findByIdAndUpdate(id,
+      { rating: newRating },
+      { new: true }
+    ).exec();
   }
 
   //Admin place
