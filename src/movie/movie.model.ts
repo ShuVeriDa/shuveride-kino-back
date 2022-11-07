@@ -14,7 +14,7 @@ export class Parameters {
   duration: number
 
   @prop()
-  country: number
+  country: string
 }
 
 export class MovieModel extends TimeStamps {
