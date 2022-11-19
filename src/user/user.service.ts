@@ -47,18 +47,20 @@ export class UserService {
   async getAll(searchTerm?: string) {
     let options = {};
 
-    if (searchTerm)
+    if (searchTerm) {
       options = {
-        $or: {
-          email: new RegExp(searchTerm, "i")
-        }
-      };
+        $or: [
+          {
+            email: new RegExp(searchTerm, 'i'),
+          },
+        ],
+      }
+    }
 
-    return this.userModel.find(options)
+    return this.userModel
+      .find(options)
       .select("-password -updatedAt -__v")
-      .sort({
-        createdAt: "desc"
-      })
+      .sort({ createdAt: "desc" })
       .exec();
   }
 
@@ -80,6 +82,6 @@ export class UserService {
     return this.userModel.findById(_id, "favorites").populate({
       path: "favorites",
       populate: { path: "genres" }
-    }).exec().then(data => data.favorites)
+    }).exec().then(data => data.favorites);
   }
 }
