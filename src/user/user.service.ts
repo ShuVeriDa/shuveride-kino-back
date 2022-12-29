@@ -14,30 +14,33 @@ export class UserService {
   }
 
   async byId(_id: string) {
-    const user = await this.userModel.findById(_id);
+    const user = await this.userModel.findById(_id).exec();
     if (!user) throw new NotFoundException("User no found");
     return user;
   }
 
   async updateProfile(_id: string, dto: UpdateUserDto) {
-    const user = await this.byId(_id);
+    const user = await this.userModel.findById(_id);
     const isSameUser = await this.userModel.findOne({ email: dto.email });
 
-    if (isSameUser && String(_id) === String(isSameUser._id))
-      throw new NotFoundException("Email busy");
+    if (isSameUser && String(_id) !== String(isSameUser._id)) {
+      throw new NotFoundException('Email busy')
+    }
 
     if (dto.password) {
       const salt = await genSalt(10);
       user.password = await hash(dto.password, salt);
     }
 
-    user.email = dto.email;
-    if (dto.isAdmin || dto.isAdmin === false)
-      user.isAdmin = dto.isAdmin;
+    if (user) {
+      user.email = dto.email;
+      if (dto.isAdmin || dto.isAdmin === false) user.isAdmin = dto.isAdmin;
 
-    await user.save();
+      await user.save();
+      return;
+    }
 
-    return;
+    throw new NotFoundException('User not found')
   }
 
   async getCount() {
