@@ -43,7 +43,7 @@ export class MovieService {
   }
 
   async byActor(actorId: Types.ObjectId) {
-    const actors = await this.movieModel.findOne({ actors: actorId }).exec();
+    const actors = await this.movieModel.find({ actors: actorId }).exec();
     if (!actors) throw new NotFoundException("Movies not found");
 
     return actors;
